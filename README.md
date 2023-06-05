@@ -21,7 +21,7 @@ Finally, copy the `Kern` directory to the `galapagos/userIP/ip_repo`.
 
 ## File Description
 This section introduces the JSON file used to setup kernel configurations, Galapagos cluster configurations, and Layer configurations for I-BERT.
-### config
+### config.json
 ```
 "num_build_thread": 48,
 "max_sentence_len": 128,
