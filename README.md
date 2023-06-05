@@ -23,217 +23,55 @@ Finally, copy the `Kern` directory to the `galapagos/userIP/ip_repo`.
 This section introduces the JSON file used to setup kernel configurations, Galapagos cluster configurations, and Layer configurations for I-BERT.
 ### CONFIG.JSON
 ```
-  "num_build_thread": 48,
-	"max_sentence_len": 128,
-	"hidden_size": 768,
-	"num_hidden_layers": 12,
-	"num_attention_heads": 12,
-	"intermediate_size": 3072,
-	"num_layer_per_encoder": 8,
-	"cluster": [["attention_0", "attention_1", "attention_2", "attention_output_0", "attention_output_1", "intermediate_0", "intermediate_output_0", "intermediate_output_1"]],
+"num_build_thread": 48,
+"max_sentence_len": 128,
+"hidden_size": 768,
+"num_hidden_layers": 12,
+"num_attention_heads": 12,
+"intermediate_size": 3072,
+"num_layer_per_encoder": 8,
+"cluster": [["attention_0", "attention_1", "attention_2", "attention_output_0", "attention_output_1", "intermediate_0", "intermediate_output_0", "intermediate_output_1"]],
 
-	"attention_0": 
-	{
-		"partition": 1,
-		"part": "xczu19eg-ffvc1760-2-i",
-		"board": "sidewinder",
-		"config": 
-		[
+"attention_0": 
+{
+	"partition": 1,
+	"part": "xczu19eg-ffvc1760-2-i",
+	"board": "sidewinder",
+	"config": 
+	[
+		{
+			"name": "linear",
+			"cluster": 0,
+			"dim": 
 			{
-				"name": "linear",
-				"cluster": 0,
-				"dim": 
-				{
-					"M": 768,
-					"K": 768,
-					"tile": 2,
-					"pe": 6
-				}
-			},
-			{
-				"name": "act",
-				"dim": 
-				{
-					"unroll": 4
-				}
+				"M": 768,
+				"K": 768,
+				"tile": 2,
+				"pe": 6
 			}
-		]
-	},
-	"attention_1": 
-	{
-		"partition": 1,
-		"part": "xczu19eg-ffvc1760-2-i",
-		"board": "sidewinder",
-		"config": 
-		[
+		},
+		{
+			"name": "act",
+			"dim": 
 			{
-				"name": "attention_matmul",
-				"dim": 
-				{
-					"pe": 2
-				}
-			},
-			{
-				"name": "softmax",
-				"dim": 
-				{
-					"unroll": 2
-				}
+				"unroll": 4
 			}
-		]
-	},
-	"attention_2": 
-	{
-		"partition": 1,
-		"part": "xczu19eg-ffvc1760-2-i",
-		"board": "sidewinder",
-		"config": 
-		[
-			{
-				"name": "softmax_matmul",
-				"dim": 
-				{
-					"pe": 2
-				}
-			},
-			{
-				"name": "act",
-				"dim": 
-				{
-					"unroll": 4
-				}
-			}
-		]
-	},
-	"attention_output_0":
-	{
-		"partition": 1,
-		"part": "xczu19eg-ffvc1760-2-i",
-		"board": "sidewinder",
-		"config": 
-		[
-			{
-				"name": "linear",
-				"dim": 
-				{
-					"M": 768,
-					"K": 768,
-					"tile": 4,
-					"pe": 12
-				}
-			},
-			{
-				"name": "act",
-				"dim": 
-				{
-					"unroll": 4
-				}
-			}
-		]
-	},
-	"attention_output_1":
-	{
-		"partition": 1,
-		"part": "xczu19eg-ffvc1760-2-i",
-		"board": "sidewinder",
-		"config": 
-		[
-			{
-				"name": "layernorm",
-				"dim": 
-				{
-					"unroll": 16
-				}
-			},
-			{
-				"name": "act",
-				"dim": 
-				{
-					"unroll": 4
-				}
-			}
-		]
-	},
-	"intermediate_0":
-	{
-		"partition": 1,
-		"part": "xczu19eg-ffvc1760-2-i",
-		"board": "sidewinder",
-		"config": 
-		[
-			{
-				"name": "linear",
-				"dim": 
-				{
-					"M": 3072,
-					"K": 768,
-					"tile": 4,
-					"pe": 12
-				}
-			},
-			{
-				"name": "gelu",
-				"dim": 
-				{
-					"unroll": 4
-				}
-			},
-			{
-				"name": "act",
-				"dim": 
-				{
-					"unroll": 4
-				}
-			}
-		]
-	},
-	"intermediate_output_0":
-	{
-		"partition": 1,
-		"part": "xczu19eg-ffvc1760-2-i",
-		"board": "sidewinder",
-		"config": 
-		[
-			{
-				"name": "linear",
-				"dim": 
-				{
-					"M": 768,
-					"K": 3072,
-					"tile": 4,
-					"pe": 12
-				}
-			},
-			{
-				"name": "act",
-				"dim": 
-				{
-					"unroll": 4
-				}
-			}
-		]
-	},
-	"intermediate_output_1":
-	{
-		"partition": 1,
-		"part": "xczu19eg-ffvc1760-2-i",
-		"board": "sidewinder",
-		"config": 
-		[
-			{
-				"name": "layernorm",
-				"dim": 
-				{
-					"unroll": 4
-				}
-			},
-			{
-				"name": "act",
-				"dim": 
-				{
-					"unroll": 4
-				}
-			}
-		]
-	}
+		}
+	]
+},
+
+...
+
+`num_build_thread` describes how many CPU threads used to build HLS IP cores.
+`max_sentence_len` describes the Transformer sentence length.
+`hidden_size` describes the Transformer hidden state size.
+`num_hidden_layers` describes the Transformer number of encoder layers.
+`num_attention_heads` describes the Transformer number of attention heads.
+`intermediate_size` describes the Transformer intermediate size.
+`num_layer_per_encoder` describes the Transformer number of layers within each encoder.
+`cluster` describes the grouping of Galapgos clusters. In this example, the eight layers are grouped into one cluster.
+`attention_0` describes the configuration of layer `attention_0`, including the FPGA used, and the kernels within the layer.
+`linear` describes the linear kernel configurations.
+`act` describes the quantization kernel configurations.
+
 ```
