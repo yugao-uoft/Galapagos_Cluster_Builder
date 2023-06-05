@@ -1,0 +1,215 @@
+{
+	"num_build_thread":48,
+	"max_sentence_len": 128,
+	"hidden_size": 768,
+	"num_hidden_layers": 12,
+	"num_attention_heads": 12,
+	"intermediate_size": 3072,
+	"num_layer_per_encoder": 8,
+	"cluster": [["attention_0", "attention_1", "attention_2", "attention_output_0", "attention_output_1", "intermediate_0", "intermediate_output_0", "intermediate_output_1"]],
+
+	"attention_0": 
+	{
+		"partition": 1,
+		"part": "xczu19eg-ffvc1760-2-i",
+		"board": "sidewinder",
+		"config": 
+		[
+			{
+				"name": "linear",
+				"cluster": 0,
+				"dim": 
+				{
+					"M": 768,
+					"K": 768,
+					"tile": 2,
+					"pe": 6
+				}
+			},
+			{
+				"name": "act",
+				"dim": 
+				{
+					"unroll": 4
+				}
+			}
+		]
+	},
+	"attention_1": 
+	{
+		"partition": 1,
+		"part": "xczu19eg-ffvc1760-2-i",
+		"board": "sidewinder",
+		"config": 
+		[
+			{
+				"name": "attention_matmul",
+				"dim": 
+				{
+					"pe": 2
+				}
+			},
+			{
+				"name": "softmax",
+				"dim": 
+				{
+					"unroll": 2
+				}
+			}
+		]
+	},
+	"attention_2": 
+	{
+		"partition": 1,
+		"part": "xczu19eg-ffvc1760-2-i",
+		"board": "sidewinder",
+		"config": 
+		[
+			{
+				"name": "softmax_matmul",
+				"dim": 
+				{
+					"pe": 2
+				}
+			},
+			{
+				"name": "act",
+				"dim": 
+				{
+					"unroll": 4
+				}
+			}
+		]
+	},
+	"attention_output_0":
+	{
+		"partition": 1,
+		"part": "xczu19eg-ffvc1760-2-i",
+		"board": "sidewinder",
+		"config": 
+		[
+			{
+				"name": "linear",
+				"dim": 
+				{
+					"M": 768,
+					"K": 768,
+					"tile": 4,
+					"pe": 12
+				}
+			},
+			{
+				"name": "act",
+				"dim": 
+				{
+					"unroll": 4
+				}
+			}
+		]
+	},
+	"attention_output_1":
+	{
+		"partition": 1,
+		"part": "xczu19eg-ffvc1760-2-i",
+		"board": "sidewinder",
+		"config": 
+		[
+			{
+				"name": "layernorm",
+				"dim": 
+				{
+					"unroll": 16
+				}
+			},
+			{
+				"name": "act",
+				"dim": 
+				{
+					"unroll": 4
+				}
+			}
+		]
+	},
+	"intermediate_0":
+	{
+		"partition": 1,
+		"part": "xczu19eg-ffvc1760-2-i",
+		"board": "sidewinder",
+		"config": 
+		[
+			{
+				"name": "linear",
+				"dim": 
+				{
+					"M": 3072,
+					"K": 768,
+					"tile": 4,
+					"pe": 12
+				}
+			},
+			{
+				"name": "gelu",
+				"dim": 
+				{
+					"unroll": 4
+				}
+			},
+			{
+				"name": "act",
+				"dim": 
+				{
+					"unroll": 4
+				}
+			}
+		]
+	},
+	"intermediate_output_0":
+	{
+		"partition": 1,
+		"part": "xczu19eg-ffvc1760-2-i",
+		"board": "sidewinder",
+		"config": 
+		[
+			{
+				"name": "linear",
+				"dim": 
+				{
+					"M": 768,
+					"K": 3072,
+					"tile": 4,
+					"pe": 12
+				}
+			},
+			{
+				"name": "act",
+				"dim": 
+				{
+					"unroll": 4
+				}
+			}
+		]
+	},
+	"intermediate_output_1":
+	{
+		"partition": 1,
+		"part": "xczu19eg-ffvc1760-2-i",
+		"board": "sidewinder",
+		"config": 
+		[
+			{
+				"name": "layernorm",
+				"dim": 
+				{
+					"unroll": 4
+				}
+			},
+			{
+				"name": "act",
+				"dim": 
+				{
+					"unroll": 4
+				}
+			}
+		]
+	}
+}
