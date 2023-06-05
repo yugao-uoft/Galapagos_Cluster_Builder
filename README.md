@@ -64,15 +64,25 @@ This section introduces the JSON file used to setup kernel configurations, Galap
 ```
 
 `num_build_thread` describes how many CPU threads used to build HLS IP cores.
+
 `max_sentence_len` describes the Transformer sentence length.
+
 `hidden_size` describes the Transformer hidden state size.
+
 `num_hidden_layers` describes the Transformer number of encoder layers.
+
 `num_attention_heads` describes the Transformer number of attention heads.
+
 `intermediate_size` describes the Transformer intermediate size.
+
 `num_layer_per_encoder` describes the Transformer number of layers within each encoder.
+
 `cluster` describes the grouping of Galapgos clusters. In this example, the eight layers are grouped into one cluster.
+
 `attention_0` describes the configuration of layer `attention_0`, including the FPGA used, and the kernels within the layer.
+
 `linear` describes the linear kernel configurations.
+
 `act` describes the quantization kernel configurations.
 
 
