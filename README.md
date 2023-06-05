@@ -21,7 +21,7 @@ Finally, copy the `Kern` directory to the `galapagos/userIP/ip_repo`.
 
 ## File Description
 This section introduces the JSON file used to setup kernel configurations, Galapagos cluster configurations, and Layer configurations for I-BERT.
-### CONFIG.JSON
+### config
 ```
 "num_build_thread": 48,
 "max_sentence_len": 128,
@@ -62,6 +62,8 @@ This section introduces the JSON file used to setup kernel configurations, Galap
 
 ...
 
+```
+
 `num_build_thread` describes how many CPU threads used to build HLS IP cores.
 `max_sentence_len` describes the Transformer sentence length.
 `hidden_size` describes the Transformer hidden state size.
@@ -74,4 +76,4 @@ This section introduces the JSON file used to setup kernel configurations, Galap
 `linear` describes the linear kernel configurations.
 `act` describes the quantization kernel configurations.
 
-```
+
